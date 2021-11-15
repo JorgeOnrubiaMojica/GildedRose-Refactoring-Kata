@@ -6,17 +6,17 @@ class GildedRose(var items: Array<Item>) {
         items.forEach {
             if (!isAgedBrie(it.name) && !isBackstagePass(it.name)) {
                 if (isQualityOverZero(it.quality) && !isSulfuras(it.name)) {
-                    decrementQualityBy(it, 1)
+                    decrementQualityByOne(it)
                 }
             } else {
                 if (isLessThanMaximumQuality(it)) {
-                    incrementQualityBy(it, 1)
+                    incrementQualityByOne(it)
                     if (isBackstagePass(it.name) && isLessThanMaximumQuality(it)) {
                         if (it.sellIn < 11) {
-                            incrementQualityBy(it, 1)
+                            incrementQualityByOne(it)
                         }
                         if (it.sellIn < 6) {
-                            incrementQualityBy(it, 1)
+                            incrementQualityByOne(it)
                         }
                     }
 
@@ -31,17 +31,15 @@ class GildedRose(var items: Array<Item>) {
             if (isExpired(it)) {
                 if (!isAgedBrie(it.name)) {
                     if (!isBackstagePass(it.name)) {
-                        if (isQualityOverZero(it.quality)) {
-                            if (isSulfuras(it.name)) {
-                                decrementQualityBy(it, 1)
-                            }
+                        if (isQualityOverZero(it.quality) && isSulfuras(it.name)) {
+                            decrementQualityByOne(it)
                         }
                     } else {
                         setQualityToZero(it)
                     }
                 } else {
                     if (isLessThanMaximumQuality(it)) {
-                        incrementQualityBy(it, 1)
+                        incrementQualityByOne(it)
                     }
                 }
             }
@@ -56,16 +54,16 @@ class GildedRose(var items: Array<Item>) {
 
     private fun isExpired(item: Item) = item.sellIn < 0
 
-    private fun incrementQualityBy(item: Item, i: Int) {
-        item.quality += i
+    private fun incrementQualityByOne(item: Item) {
+        item.quality++
     }
 
     private fun isLessThanMaximumQuality(item: Item) = item.quality < 50
 
     private fun isQualityOverZero(quality: Int) = quality > 0
 
-    private fun decrementQualityBy(item: Item, i: Int) {
-        item.quality -= i
+    private fun decrementQualityByOne(item: Item) {
+        item.quality--
     }
 
     private fun isSulfuras(name: String) = name == "Sulfuras, Hand of Ragnaros"
