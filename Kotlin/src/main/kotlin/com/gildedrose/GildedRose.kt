@@ -3,20 +3,20 @@ package com.gildedrose
 class GildedRose(var items: Array<Item>) {
 
     fun updateQuality() {
-        for (i in items.indices) {
-            if (!isAgedBrie(items[i].name) && !isBackstagePass(items[i].name)) {
-                if (isQualityOverZero(items[i].quality) && !isSulfuras(items[i].name)) {
-                    decrementQualityBy(items[i], 1)
+        items.forEach {
+            if (!isAgedBrie(it.name) && !isBackstagePass(it.name)) {
+                if (isQualityOverZero(it.quality) && !isSulfuras(it.name)) {
+                    decrementQualityBy(it, 1)
                 }
             } else {
-                if (isLessThanMaximumQuality(items[i])) {
-                    incrementQualityBy(items[i], 1)
-                    if (isBackstagePass(items[i].name) && isLessThanMaximumQuality(items[i])) {
-                        if (items[i].sellIn < 11) {
-                            incrementQualityBy(items[i], 1)
+                if (isLessThanMaximumQuality(it)) {
+                    incrementQualityBy(it, 1)
+                    if (isBackstagePass(it.name) && isLessThanMaximumQuality(it)) {
+                        if (it.sellIn < 11) {
+                            incrementQualityBy(it, 1)
                         }
-                        if (items[i].sellIn < 6) {
-                            incrementQualityBy(items[i], 1)
+                        if (it.sellIn < 6) {
+                            incrementQualityBy(it, 1)
                         }
                     }
 
@@ -24,28 +24,30 @@ class GildedRose(var items: Array<Item>) {
             }
 
 
-            if (!isSulfuras(items[i].name)) {
-                items[i].sellIn = items[i].sellIn - 1
+            if (!isSulfuras(it.name)) {
+                it.sellIn = it.sellIn - 1
             }
 
-            if (isExpired(items[i])) {
-                if (!isAgedBrie(items[i].name)) {
-                    if (!isBackstagePass(items[i].name)) {
-                        if (isQualityOverZero(i)) {
-                            if (isSulfuras(items[i].name)) {
-                                decrementQualityBy(items[i], 1)
+            if (isExpired(it)) {
+                if (!isAgedBrie(it.name)) {
+                    if (!isBackstagePass(it.name)) {
+                        if (isQualityOverZero(it.quality)) {
+                            if (isSulfuras(it.name)) {
+                                decrementQualityBy(it, 1)
                             }
                         }
                     } else {
-                        setQualityToZero(items[i])
+                        setQualityToZero(it)
                     }
                 } else {
-                    if (isLessThanMaximumQuality(items[i])) {
-                        incrementQualityBy(items[i], 1)
+                    if (isLessThanMaximumQuality(it)) {
+                        incrementQualityBy(it, 1)
                     }
                 }
             }
         }
+
+
     }
 
     private fun setQualityToZero(item: Item) {
