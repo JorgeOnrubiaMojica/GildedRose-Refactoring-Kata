@@ -4,7 +4,9 @@ class GildedRose(var items: Array<Item>) {
 
     fun updateQuality() {
         items.forEach {
-            if (!isAgedBrie(it.name) && !isBackstagePass(it.name)) {
+            ItemCustomFactory.create(it).updateItem()
+
+            /*if (!isAgedBrie(it.name) && !isBackstagePass(it.name)) {
                 if (isQualityOverZero(it.quality) && !isSulfuras(it.name)) {
                     decrementQualityByOne(it)
                 }
@@ -42,7 +44,7 @@ class GildedRose(var items: Array<Item>) {
                         incrementQualityByOne(it)
                     }
                 }
-            }
+            }*/
         }
 
 
